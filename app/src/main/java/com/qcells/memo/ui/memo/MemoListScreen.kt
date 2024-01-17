@@ -1,9 +1,7 @@
-package com.qcells.memo.ui.screen
+package com.qcells.memo.ui.memo
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -12,13 +10,13 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Add
 import androidx.compose.material.icons.outlined.Delete
+import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -26,7 +24,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.qcells.memo.data.entity.MemoEntity
-
 
 /**
  * 저장된 메모들의 리스트와 추가 버튼이 있는 화면.
@@ -95,7 +92,7 @@ fun MemoList(
     LazyColumn(
         modifier = modifier
     ) {
-        items(memos) { memo ->
+        itemsIndexed(memos) { index, memo ->
             MemoItem(
                 modifier = Modifier.fillMaxWidth(),
                 memo = memo,
@@ -107,13 +104,13 @@ fun MemoList(
                 }
             )
 
-            CustomDivider(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(bottom = 30.dp)
-                    .height(2.dp)
-                    .background(color = MaterialTheme.colorScheme.outline)
-            )
+            if (index != memos.size - 1)
+                Divider(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 30.dp)
+                        .height(2.dp)
+                )
         }
     }
 }
@@ -158,13 +155,4 @@ fun MemoItem(
         }
     }
 
-}
-
-@Composable
-fun CustomDivider(
-    modifier: Modifier = Modifier
-) {
-    Box(
-        modifier = modifier
-    )
 }

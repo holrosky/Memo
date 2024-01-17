@@ -1,10 +1,10 @@
-package com.qcells.memo.ui.repository
+package com.qcells.memo.data.reposiroty
 
+import androidx.lifecycle.LiveData
 import com.qcells.memo.data.entity.MemoEntity
 
 interface MemoRepository {
-    suspend fun getAllMemo(): List<MemoEntity>
-
+    fun getAllMemo(): LiveData<List<MemoEntity>>
     suspend fun insertMemo(memo: MemoEntity)
 
     suspend fun updateMemo(memo: MemoEntity)

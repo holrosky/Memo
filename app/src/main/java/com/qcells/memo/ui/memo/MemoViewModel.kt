@@ -1,6 +1,5 @@
-package com.qcells.memo.ui.viewmodel
+package com.qcells.memo.ui.memo
 
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
@@ -9,7 +8,7 @@ import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.qcells.memo.MemoApplication
 import com.qcells.memo.data.entity.MemoEntity
-import com.qcells.memo.ui.repository.MemoRepository
+import com.qcells.memo.data.reposiroty.MemoRepository
 import kotlinx.coroutines.launch
 
 class MemoViewModel(
@@ -17,35 +16,21 @@ class MemoViewModel(
 ) : ViewModel() {
 
     // MemoListScreen 에서 보여줄 저장된 메모들이 담겨있는 배열
-    private val _memos = MutableLiveData(emptyList<MemoEntity>())
-    val memos: MutableLiveData<List<MemoEntity>> = _memos
-
-    init {
-        initData()
-    }
-
-    private fun initData() {
-        // 처음 ViewModel이 생성될 때 저장된 메모를 불러온다.
-        viewModelScope.launch {
-            getAllMemo()
-        }
-
-    }
-
-    private suspend fun getAllMemo() {
-        _memos.value = repository.getAllMemo()
-    }
+    // 피드백 반영 : 기존에는 Room 데이터베이스로 부터 List<> 형태로 받아왔기 때문에 insert, update 혹은 delete 작업 후
+    // 매번 수동으로 getAllMemo() 함수를 호출했지만, 이런 번거로운 호출을 줄이기 위해
+    // Room 데이터베이스로부터 LiveData 형태로 받아오게 하였다.
+    val memos = repository.getAllMemo()
 
     fun insertMemo(title: String, content: String) {
         viewModelScope.launch {
             repository.insertMemo(
                 MemoEntity(
-                    title = title,
-                    content = content
+                    // 피드백 반영 : String 이 비어있다면 다른 내용으로 대체하는 것은 언제든 요구사항에 따라 내용이 바뀔 수
+                    // 있는 부분이기 때문에 ViewModel 에서 처리하게 하였다.
+                    title = title.ifEmpty { "제목없음" },
+                    content = content.ifEmpty { "내용없음" }
                 )
             )
-
-            getAllMemo()
         }
     }
 
@@ -54,19 +39,16 @@ class MemoViewModel(
             repository.updateMemo(
                 MemoEntity(
                     id = id,
-                    title = title,
-                    content = content
+                    title = title.ifEmpty { "제목없음" },
+                    content = content.ifEmpty { "내용없음" }
                 )
             )
-
-            getAllMemo()
         }
     }
 
     fun deleteMemo(memo: MemoEntity) {
         viewModelScope.launch {
             repository.deleteMemo(memo)
-            getAllMemo()
         }
     }
 

@@ -1,4 +1,4 @@
-package com.qcells.memo.ui.screen
+package com.qcells.memo.ui.memo
 
 import com.qcells.memo.data.entity.MemoEntity
 

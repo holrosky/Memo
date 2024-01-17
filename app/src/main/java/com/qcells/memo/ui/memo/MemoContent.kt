@@ -1,4 +1,4 @@
-package com.qcells.memo.ui.screen
+package com.qcells.memo.ui.memo
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Column

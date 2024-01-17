@@ -1,27 +1,29 @@
-package com.qcells.memo.ui.screen
+package com.qcells.memo.ui.memo
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
+import com.qcells.memo.data.entity.MemoEntity
 
 @Composable
-fun AddMemoScreen(
-    onAddClick: (String, String) -> Unit,
+fun EditMemoScreen(
+    memo: MemoEntity,
+    onUpdateClick: (Int, String, String) -> Unit,
     onBack: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-
-    val titleText = rememberSaveable { mutableStateOf("") }
-    val contentText = rememberSaveable { mutableStateOf("") }
+    val titleText = rememberSaveable { mutableStateOf(memo.title) }
+    val contentText = rememberSaveable { mutableStateOf(memo.content) }
 
     MemoContent(
         title = titleText.value,
         content = contentText.value,
         onSaveClick = {
-            onAddClick(
-                titleText.value.ifEmpty { "제목없음" },
-                contentText.value.ifEmpty { "내용없음" }
+            onUpdateClick(
+                memo.id,
+                titleText.value,
+                contentText.value
             )
         },
         onTitleValueChange = {
@@ -34,5 +36,4 @@ fun AddMemoScreen(
             onBack()
         }
     )
-
 }
