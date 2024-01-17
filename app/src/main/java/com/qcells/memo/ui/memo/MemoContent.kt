@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -14,6 +15,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.qcells.memo.ui.component.CustomTextFieldWithLabel
 
 @Composable
 fun MemoContent(
@@ -36,10 +38,11 @@ fun MemoContent(
             }
         )
 
-        CustomTextField(
+        CustomTextFieldWithLabel(
             modifier = Modifier.fillMaxWidth(),
             text = title,
             label = "제목",
+            singleLine = true,
             onValueChange = {
                 onTitleValueChange(it)
             }
@@ -47,7 +50,7 @@ fun MemoContent(
 
         Spacer(modifier = Modifier.height(20.dp))
 
-        CustomTextField(
+        CustomTextFieldWithLabel(
             modifier = Modifier.fillMaxSize(),
             text = content,
             label = "내용",
