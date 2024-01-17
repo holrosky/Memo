@@ -37,7 +37,17 @@ fun CustomTextFieldWithLabel(
     singleLine: Boolean = false,
     onValueChange: (String) -> Unit,
 ) {
+
     val focusManager = LocalFocusManager.current
+
+    /**
+     * CustomTextFieldWithLabel Composable 이 포커싱을 가지고있는지에 관한 상태값이다.
+     * isActive 를 호이스팅 하지 않은 이유
+     * MemoContent 는 2개의 CustomTextFieldWithLabel Composable 을 포함하는데, 둘 중 하나의
+     * CustomTextFieldWithLabel 의 포커싱 상태 값이 변하는 것은 다른 한개의 CustomTextFieldWithLabel 과는 전혀 상관이 없다.
+     * 따라서 호이스팅을 하게 되면 영향을 받지 않는 다른 CustomTextFieldWithLabel 까지도 recomposition 이
+     * 발생하므로 불필요한 recomposition 을 줄이기 위해 호이스팅을 하지 않았다
+    **/   
     var isActive by rememberSaveable { mutableStateOf(true) }
 
     Column(
