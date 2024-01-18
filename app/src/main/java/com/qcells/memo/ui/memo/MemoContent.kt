@@ -3,18 +3,14 @@ package com.qcells.memo.ui.memo
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.text.BasicTextField
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.qcells.memo.ui.component.CustomTextButton
 import com.qcells.memo.ui.component.CustomTextFieldWithLabel
 
 @Composable
@@ -32,7 +28,8 @@ fun MemoContent(
         horizontalAlignment = Alignment.End,
     ) {
 
-        SaveMemoButton(
+        CustomTextButton(
+            buttonText = "저장",
             onClick = {
                 onSaveClick()
             }
@@ -42,7 +39,6 @@ fun MemoContent(
             modifier = Modifier.fillMaxWidth(),
             text = title,
             label = "제목",
-            singleLine = true,
             onValueChange = {
                 onTitleValueChange(it)
             }
@@ -51,7 +47,7 @@ fun MemoContent(
         Spacer(modifier = Modifier.height(20.dp))
 
         CustomTextFieldWithLabel(
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier.fillMaxWidth(),
             text = content,
             label = "내용",
             onValueChange = {
@@ -62,37 +58,5 @@ fun MemoContent(
 
     BackHandler(
         onBack = onBackButtonClick
-    )
-}
-
-@Composable
-fun SaveMemoButton(
-    onClick: () -> Unit,
-    modifier: Modifier = Modifier
-) {
-    TextButton(
-        modifier = modifier,
-        onClick = {
-            onClick()
-        }
-    ) {
-        Text(
-            text = "저장"
-        )
-    }
-}
-
-@Composable
-fun CustomTextField(
-    text: String,
-    label: String,
-    onValueChange: (String) -> Unit,
-    modifier: Modifier = Modifier
-) {
-    OutlinedTextField(
-        modifier = modifier,
-        value = text,
-        label = { Text(label) },
-        onValueChange = onValueChange
     )
 }
