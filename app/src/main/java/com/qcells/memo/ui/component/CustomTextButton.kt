@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ripple.LocalRippleTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
@@ -26,6 +27,7 @@ fun CustomTextButton(
     buttonText: String,
     onClick: () -> Unit,
 ) {
+    // https://developer.android.com/jetpack/compose/compositionlocal 과
     // https://developer.android.com/reference/kotlin/androidx/compose/material/ripple/package-summary 참고하여 구현하였다.
     CompositionLocalProvider(LocalRippleTheme provides CustomRippleTheme(rippleColor = ButtonPressed)) {
         Box(

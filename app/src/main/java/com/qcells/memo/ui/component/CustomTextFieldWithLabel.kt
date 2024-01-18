@@ -61,13 +61,17 @@ fun CustomTextFieldWithLabel(
 
         /**
          * TextField 의 내부 구조를 보니 TextField 도 BasicTextField 을 호출하고 있었고, BasicTextField 은
-         * CoreTextField 를 호출하고 있다는 것을 확인했다. TextField 는 Meterial Design Guilde 를 따르는
-         * Composable 인 점과 TextField -> BasicTextField -> CoreTextField 순서인 내부 구조를 보았을 때
+         * CoreTextField 를 호출하고 있다는 것을 확인했다. TextField 는 Meterial Design guidelines 를 따르는
+         * Composable 인 점 (https://developer.android.com/jetpack/compose/text/user-input 참고 )과
+         * TextField -> BasicTextField -> CoreTextField 순서인 내부 구조를 보았을 때,
          * 아래 레벨로 내려갈 수록 개발자가 커스텀할 수 있는 부분이 더 많다고 생각하였다.
          * 현재 요구사항에 필요한 둥근 모서리, 포커싱 등의 기능들은 전부 TextField 로도 할 수 있으니 굳이 로우 레벨 API 를 사용할 필요가
          * 없다고 생각하여 TextField 로 구현을 하려고 했었다. 하지만 요구 사항 중 TextField 내부의 패딩을 적용해야 하는 것이 있는데,
          * TextField 는 기본적으로 내부 패딩이 존재하고 이를 조절할 수 방법을 딱히 찾지 못했다. 결국에는 아무런 decoration 이 없는
          * BasicTextField 으로 구현을 하게 되었다.
+         *
+         * BasicTextField 구현 참조 링크
+         * https://developer.android.com/reference/kotlin/androidx/compose/foundation/text/package-summary#BasicTextField(androidx.compose.ui.text.input.TextFieldValue,kotlin.Function1,androidx.compose.ui.Modifier,kotlin.Boolean,kotlin.Boolean,androidx.compose.ui.text.TextStyle,androidx.compose.foundation.text.KeyboardOptions,androidx.compose.foundation.text.KeyboardActions,kotlin.Boolean,kotlin.Int,kotlin.Int,androidx.compose.ui.text.input.VisualTransformation,kotlin.Function1,androidx.compose.foundation.interaction.MutableInteractionSource,androidx.compose.ui.graphics.Brush,kotlin.Function1)
          **/
 
         BasicTextField(
